@@ -1,0 +1,25 @@
+name: Build OpenJBOD Firmwares
+
+on:
+  push:
+    paths:
+      - 'ports/rp2/boards/OPENJBOD**'
+
+jobs:
+  build:
+    name: Build Firwmare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+      - name: Install dependencies
+        run: sudo apt-get install build-essential libffi-dev pkg-config
+      - name: Make mpy-cross
+        run: make -j $(nproc) -C mpy-cross/
+      - name: Build MicroPython
+        run: make -j $(nproc) -C ports/rp2/ BOARD=OPENJBOD_RP2040
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware.uf2
+          path: ports/rp2/build-OPENJBOD_RP2040/firmware.uf2

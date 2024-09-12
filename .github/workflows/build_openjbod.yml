@@ -16,6 +16,8 @@ jobs:
         run: sudo apt-get install build-essential libffi-dev pkg-config
       - name: Make mpy-cross
         run: make -j $(nproc) -C mpy-cross/
+      - name: Get submodules
+        run: make -j $(nrpoc) -C ports/rp2/ BOARD=OPENJBOD_RP2040 submodules
       - name: Build MicroPython
         run: make -j $(nproc) -C ports/rp2/ BOARD=OPENJBOD_RP2040
       - name: Upload Artifact

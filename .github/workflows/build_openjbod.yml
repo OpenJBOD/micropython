@@ -1,6 +1,7 @@
 name: Build OpenJBOD Firmwares
 
 on:
+  workflow_dispatch: {}
   push:
     paths:
       - 'ports/rp2/boards/OPENJBOD**'
